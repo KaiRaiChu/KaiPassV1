@@ -42,26 +42,34 @@ def getlist():
     else:
         messagebox.showinfo("Passwords", "Empty List !!")
 
+
 def encrypt():
-
+    PASSWORD_PATH = "passwords.txt"
     try:
-            with open("passwords.txt", 'r') as file:
-                for line in file:
-                    password = line.strip() # Remove whitespace or newline characters
-                    if password == entryName.get():
-                        # Hash the password using SHA-256
-                        hashed_password = hashlib.sha256(password.encode()).hexdigest()
-                        print(f"Password found: {password}")
-                        print(f"SHA-256 Hash: {hashed_password}")
-                        return
-            print("Password not found in the file.")
+        with open(PASSWORD_PATH) as file:
+            record_list = file.readlines()
+    except FileNotFoundError:
+        messagebox.showinfo(
+                "Error", 
+                f"{PASSWORD_PATH} file not found"
+            )
+        return
     
-
+    current_user = entryName.get()
+    for record in record_list:
+        if record.split()[0] == current_user:
+            current_password = record.split()[1]
+            res = hashlib.sha256(current_password.encode('utf-8')).hexdigest()
             messagebox.showinfo(
-                "Success", f"User {entryName.get()} encrypted successfully!, {hashed_password} ")
+                "Success", 
+                f"Hashed version of password for user {current_user} is {res}"
+            )
+            return
         
-    except Exception as e:
-        messagebox.showerror("Error", f"encrypting {entryName.get()}  {e}")
+    messagebox.showinfo(
+        "Failure", 
+        f"Username not found"
+    )
       
 
 if __name__ == "__main__":
