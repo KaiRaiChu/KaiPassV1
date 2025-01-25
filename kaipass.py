@@ -43,7 +43,7 @@ def getlist():
         messagebox.showinfo("Passwords", "Empty List !!")
 
 
-def encrypt():
+def hash():
     PASSWORD_PATH = "passwords.txt"
     try:
         with open(PASSWORD_PATH) as file:
@@ -102,7 +102,7 @@ if __name__ == "__main__":
 
 
     # Encrypt Button
-    buttonList = tk.Button(app, text="Encrypt", command=encrypt, bg='thistle1')
+    buttonList = tk.Button(app, text="Hash", command=hash, bg='thistle1')
     buttonList.grid(row=4, column=0, padx=15, pady=8, sticky="we")
 
     app.mainloop()
